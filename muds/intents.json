@@ -1,0 +1,115 @@
+{
+    "intents": [
+        {
+            "tag": "greeting",
+            "patterns": ["Hi", "How are you", "Is anyone there?", "Hello", "Good day", "Hey", "What's up?", "Howdy", "Greetings", "Hi there"],
+            "responses": ["Hello, thanks for visiting", "Good to see you again", "Hi there, how can I help?", "Hey! How's it going?", "Hi! What can I do for you today?", "Greetings! How can I assist?"],
+            "context_set": ""
+        },
+        {
+            "tag": "goodbye",
+            "patterns": ["Bye", "See you later", "Goodbye", "Good day", "Catch you later", "Take care", "See ya", "Farewell", "Talk to you soon"],
+            "responses": ["See you later, thanks for visiting", "Have a nice day!", "Bye! Come back again", "Take care!", "Goodbye! Hope to see you soon", "Farewell! Safe travels"]
+        },
+        {
+            "tag": "thanks",
+            "patterns": ["Thanks", "Thank you", "That's helpful", "I appreciate it", "Much obliged", "Thanks a lot", "Thank you so much", "Thanks for your help", "I owe you one"],
+            "responses": ["Happy to help!", "Any time!", "My pleasure", "You're welcome!", "Glad I could assist", "No problem at all"]
+        },
+        {
+            "tag": "help",
+            "patterns": ["Can you help me?", "I need assistance", "Could you assist me?", "Help me please", "I have a problem", "I need help", "Can I get some help?", "I need support"],
+            "responses": ["Of course, how can I assist?", "Sure, what do you need help with?", "I'm here to help, tell me more", "How can I be of assistance today?", "Let me know what you need help with"]
+        },
+        {
+            "tag": "weather",
+            "patterns": ["What's the weather like?", "Is it going to rain?", "Tell me the forecast", "Weather update", "Will it be sunny today?", "What's the temperature?", "How's the weather?"],
+            "responses": ["Let me check the weather for you", "It looks sunny today", "There might be rain, better take an umbrella", "The forecast says clear skies", "Expect some clouds today"]
+        },
+        {
+            "tag": "booking",
+            "patterns": ["I want to book a flight", "Can you book a hotel for me?", "Reserve a table", "Make a reservation", "Book a ticket", "I need to schedule an appointment", "Can you reserve a seat?"],
+            "responses": ["Sure, let me help you with that", "What details do you need for your booking?", "I can assist with your reservation", "Tell me what you need to book", "Let me know the specifics and I'll handle it"]
+        },
+        {
+            "tag": "complaint",
+            "patterns": ["I want to make a complaint", "I have an issue", "This isn't working", "I'm unhappy with the service", "I need to report a problem", "Something went wrong", "Can I file a complaint?"],
+            "responses": ["I'm sorry to hear that, let me assist you", "Can you provide more details about the issue?", "I'll do my best to resolve this for you", "Thank you for bringing this to my attention", "Let me take care of this issue for you"]
+        },
+        {
+            "tag": "joke",
+            "patterns": ["Tell me a joke", "Make me laugh", "I need some humor", "Can you be funny?", "Say something funny", "Do you know any jokes?", "Make me smile"],
+            "responses": ["Why don't scientists trust atoms? Because they make up everything!", "What do you call fake spaghetti? An impasta!", "Why did the scarecrow win an award? Because he was outstanding in his field!", "Want to hear a construction joke? Oh, never mind, I'm still working on it.", "Why was the math book sad? It had too many problems."]
+        },
+        {
+            "tag": "fun_facts_animals",
+            "patterns": ["Tell me a fun fact about animals", "Do you know any animal facts?", "I want to learn something about animals", "Animal trivia", "Interesting animal facts"],
+            "responses": ["Did you know that octopuses have three hearts?", "A group of flamingos is called a 'flamboyance'.", "Elephants are the only animals that can't jump.", "Koalas sleep up to 22 hours a day.", "A shrimp's heart is located in its head."]
+        },
+        {
+            "tag": "fun_facts_movies",
+            "patterns": ["Tell me a fun fact about movies", "Do you know any movie trivia?", "I want to learn something about films", "Interesting movie facts", "Film trivia"],
+            "responses": ["The movie 'Psycho' was the first American film to show a toilet flushing.", "In 'The Matrix', the iconic green code is actually symbols from a sushi recipe.", "The longest film ever made is over 85 hours long.", "Tom Hanks improvised many of the famous lines in 'Forrest Gump'.", "The roar of the T-Rex in 'Jurassic Park' is a mix of dog, penguin, and alligator sounds."]
+        },
+        {
+            "tag": "fun_facts_space",
+            "patterns": ["Tell me a fun fact about space", "Do you know any space trivia?", "I want to learn something about the universe", "Interesting space facts", "Astronomy trivia"],
+            "responses": ["A day on Venus is longer than a year on Venus.", "Neutron stars are so dense that a sugar-cube-sized amount would weigh a billion tons.", "There are more stars in the universe than grains of sand on Earth.", "Jupiter has a storm, the Great Red Spot, that has been raging for over 300 years.", "The footprints on the moon will stay there for millions of years because there is no wind to erase them."]
+        },
+        {
+            "tag": "small_talk",
+            "patterns": ["How's it going?", "What's new?", "How are you doing?", "What's up?", "How's life?", "How are things?", "What's going on?"],
+            "responses": ["I'm just a bot, but I'm here to help!", "Doing great, thanks for asking!", "All good on my end, what about you?", "I'm here to assist you", "Just waiting to help you"]
+        },
+        {
+            "tag": "hours",
+            "patterns": ["What are your hours?", "When are you open?", "Business hours", "Opening hours", "What time do you open?", "When do you close?", "Are you open now?"],
+            "responses": ["We're open 24/7!", "Our hours are from 9 AM to 5 PM, Monday through Friday", "We're open from 10 AM to 8 PM every day", "Feel free to reach out anytime", "Check our schedule online for detailed timings"]
+        },
+        {
+            "tag": "location",
+            "patterns": ["Where are you located?", "What's your address?", "Location details", "Where can I find you?", "Office location", "Where is your office?", "Can you share your address?"],
+            "responses": ["We're located at 123 Main Street", "Our office is in the downtown area", "You can find us near the central park", "We operate online, so no physical location!", "Visit our website for more details"]
+        },
+        {
+            "tag": "products",
+            "patterns": ["What products do you offer?", "Tell me about your services", "What do you sell?", "Can you list your products?", "What are your offerings?"],
+            "responses": ["We offer a wide range of products, check our catalog for details", "Our services include X, Y, and Z", "We specialize in providing top-quality products", "Visit our website to explore all our offerings"]
+        },
+        {
+            "tag": "pricing",
+            "patterns": ["How much does this cost?", "Tell me the price", "What's the cost?", "Pricing details", "How much is it?"],
+            "responses": ["The price varies based on the product, check our website for details", "Our pricing is competitive and transparent", "You can find the cost on our website", "For pricing information, visit our product page"]
+        },
+        {
+            "tag": "fun_facts_technology",
+            "patterns": ["Tell me a fun fact about technology", "Do you know any tech trivia?", "I want to learn something about computers", "Interesting tech facts", "Technology trivia"],
+            "responses": ["The first computer virus was created in 1986 and was called 'Brain'.", "The first 1GB hard drive, introduced in 1980, weighed over 500 pounds.", "Did you know that more than 90% of the world’s data was generated in the past two years?", "The first email was sent by Ray Tomlinson to himself in 1971.", "Over 6,000 new computer viruses are created and released every month."]
+        },
+        {
+            "tag": "fun_facts_history",
+            "patterns": ["Tell me a fun fact about history", "Do you know any historical trivia?", "I want to learn something about history", "Interesting historical facts", "History trivia"],
+            "responses": ["Napoleon Bonaparte was once attacked by a horde of rabbits.", "Abraham Lincoln was a licensed bartender before becoming president.", "The Eiffel Tower can grow more than six inches during summer due to heat expansion.", "The shortest war in history was between Britain and Zanzibar on August 27, 1896. It lasted only 38 minutes.", "Ancient Egyptians used honey as an antibiotic."]
+        },
+        {
+            "tag": "fun_facts_food",
+            "patterns": ["Tell me a fun fact about food", "Do you know any food trivia?", "I want to learn something about cuisine", "Interesting food facts", "Food trivia"],
+            "responses": ["Honey never spoils. Archaeologists have found pots of honey in ancient Egyptian tombs that are over 3,000 years old and still edible.", "Apples float in water because they are 25% air.", "The world’s most expensive pizza costs over $12,000 and takes 72 hours to prepare.", "White chocolate isn’t actually chocolate because it doesn’t contain cocoa solids.", "Peanuts aren’t nuts—they’re legumes."]
+        },
+        {
+            "tag": "fun_facts_music",
+            "patterns": ["Tell me a fun fact about music", "Do you know any music trivia?", "I want to learn something about songs", "Interesting music facts", "Music trivia"],
+            "responses": ["The longest piano piece in the world is 'As Slow As Possible', and it will take 639 years to perform.", "A single violin is made from over 70 individual pieces of wood.", "In 2016, Mozart sold more CDs than Beyoncé.", "The most expensive musical instrument ever sold was a Stradivarius violin for $15.9 million.", "The first music video played on MTV was 'Video Killed the Radio Star' by The Buggles."]
+        },
+        {
+            "tag": "fun_facts_sports",
+            "patterns": ["Tell me a fun fact about sports", "Do you know any sports trivia?", "I want to learn something about games", "Interesting sports facts", "Sports trivia"],
+            "responses": ["The Olympic Games were originally a religious festival held in honor of Zeus.", "The longest tennis match lasted over 11 hours across three days at Wimbledon 2010.", "Golf is the only sport to have been played on the moon.", "Michael Phelps has won more Olympic gold medals than 161 countries.", "A baseball has exactly 108 stitches."]
+        }  
+    
+    
+    
+    
+    
+    ]
+    }
