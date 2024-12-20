@@ -1,0 +1,113 @@
+{
+    "intents": [
+        {
+            "tag": "greeting",
+            "patterns": [
+                "Hi", "Hello", "Howdy", "Hey", "Hi there", "Good day", "What's up?", 
+                "How are you doing?", "Hey there", "Yo", "What's good?", "Hola", "Hiya", 
+                "Morning", "Good morning", "Good evening"
+            ],
+            "responses": [
+                "Hello, thanks for visiting!", "Good to see you again!", "Hi there, how can I help?", 
+                "Hey! How's it going?", "Hi! What can I do for you today?", "Greetings! How can I assist?"
+            ],
+            "context_set": ""
+        },
+        {
+            "tag": "goodbye",
+            "patterns": [
+                "Bye", "See you later", "Goodbye", "Good day", "Catch you later", "Take care", 
+                "See ya", "Farewell", "Talk to you soon"
+            ],
+            "responses": [
+                "See you later, thanks for visiting!", "Have a nice day!", "Bye! Come back again!", 
+                "Take care!", "Goodbye! Hope to see you soon!", "Farewell! Safe travels!"
+            ],
+            "context_set": ""
+        },
+        {
+            "tag": "thanks",
+            "patterns": [
+                "Thanks", "Thank you", "That's helpful", "I appreciate it", "Much obliged", 
+                "Thanks a lot", "Thank you so much", "Thanks for your help", "I owe you one"
+            ],
+            "responses": [
+                "Happy to help!", "Any time!", "My pleasure", "You're welcome!", 
+                "Glad I could assist!", "No problem at all!"
+            ],
+            "context_set": ""
+        },
+        {
+            "tag": "help",
+            "patterns": [
+                "Can you help me?", "I need assistance", "Could you assist me?", "Help me please", 
+                "I have a problem", "I need help", "Can I get some help?", "I need support"
+            ],
+            "responses": [
+                "Of course, how can I assist?", "Sure, what do you need help with?", 
+                "I'm here to help, tell me more.", "How can I be of assistance today?", 
+                "Let me know what you need help with."
+            ],
+            "context_set": "help_requested"
+        },
+        {
+            "tag": "specific_help",
+            "patterns": [
+                "I need help with my account", "Can you assist with billing?", 
+                "I have an issue with login", "Can you help me with technical support?"
+            ],
+            "responses": [
+                "Let me guide you through fixing your account issue.", 
+                "I can help with billing, what seems to be the issue?", 
+                "Let's resolve your login problem together.", 
+                "I'll do my best to assist with your technical issue."
+            ],
+            "context_filter": "help_requested"
+        },
+        {
+            "tag": "weather",
+            "patterns": [
+                "What's the weather like?", "Is it going to rain?", "Tell me the forecast", 
+                "Weather update", "Will it be sunny today?", "What's the temperature?", 
+                "How's the weather?"
+            ],
+            "responses": [
+                "Let me check the weather for you.", "It looks sunny today!", 
+                "There might be rain, better take an umbrella.", "The forecast says clear skies.", 
+                "Expect some clouds today."
+            ],
+            "context_set": ""
+        },
+        {
+            "tag": "joke",
+            "patterns": [
+                "Tell me a joke", "Make me laugh", "I need some humor", "Can you be funny?", 
+                "Say something funny", "Do you know any jokes?", "Make me smile"
+            ],
+            "responses": [
+                "Why don't scientists trust atoms? Because they make up everything!", 
+                "What do you call fake spaghetti? An impasta!", 
+                "Why did the scarecrow win an award? Because he was outstanding in his field!", 
+                "Want to hear a construction joke? Oh, never mind, I'm still working on it.", 
+                "Why was the math book sad? It had too many problems."
+            ],
+            "context_set": ""
+        },
+        {
+            "tag": "fun_facts_animals",
+            "patterns": [
+                "Tell me a fun fact about animals", "Do you know any animal facts?", 
+                "I want to learn something about animals", "Animal trivia", 
+                "Interesting animal facts"
+            ],
+            "responses": [
+                "Did you know that octopuses have three hearts?", 
+                "A group of flamingos is called a 'flamboyance'.", 
+                "Elephants are the only animals that can't jump.", 
+                "Koalas sleep up to 22 hours a day.", 
+                "A shrimp's heart is located in its head."
+            ],
+            "context_set": ""
+        }
+    ]
+}

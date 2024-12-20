@@ -15,18 +15,18 @@ const Chat = () => {
   const loadFiles = async () => {
     // Cargar el modelo
    try {
-    const modelJson = await fetch('/modeloo.json');
+    const modelJson = await fetch('mids/model.json');
     const modelData = await modelJson.json();
     const loadedModel = await tf.loadLayersModel(tf.io.fromMemory(modelData));
     setModel(loadedModel);
     
     // Cargar el tokenizer
-    const tokenizerJson = await fetch('/tokenizer.json');
+    const tokenizerJson = await fetch('mids/tokenizer.json');
     const tokenizerData = await tokenizerJson.json();
     setTokenizer(tokenizerData);
     
     // Cargar los intents
-    const intentsJson = await fetch('/intents.json');
+    const intentsJson = await fetch('mids/intents.json');
     const intentsData = await intentsJson.json();
     setIntents(intentsData.intents);
     }
@@ -85,12 +85,21 @@ const Chat = () => {
     // Realizar la predicción
     const prediction = model.predict(tf.tensor2d(paddedSequences));
     const responseIndex = prediction.argMax(-1).dataSync()[0];
+    const probabilities = prediction.dataSync();
+console.log("Probabilidades predichas:", probabilities);
+
+    console.log("Sequences: ", sequences);
+    console.log("Padded Sequences: ", paddedSequences);
+    console.log("Prediction: ", prediction);
+    
+
     console.log("Índice de respuesta:", responseIndex);
   
     // Verificar si el índice de respuesta es válido y acceder al intent
+    console.log("Intents: ", intents.length);
     if (responseIndex < 0 || responseIndex >= intents.length) {
       console.log("Índice de respuesta fuera de rango:", responseIndex);
-      return "Lo siento, no pude entender tu solicitud. ¿Puedes intentar otra vez?";
+      return "Lo siento, no pude entender tu solicitudddddd. ¿Puedes intentar otra vez?";
     }
   
     // Obtener el intent correspondiente usando el índice
@@ -116,6 +125,7 @@ const Chat = () => {
 
   // Manejo del envío de mensajes
   const handleSendMessage = async () => {
+    console.log("Input: ", input);
     if (input.trim() === "") return;
 
     const timestamp = new Date().toLocaleString();
