@@ -1,143 +1,162 @@
 import React, { useState, useRef, useEffect } from "react";
 import Mensaje from "./Mensaje";
-import * as tf from "@tensorflow/tfjs"; // Importa TensorFlow.js para manejar el modelo
-
-let model;
-let tokenizer;
+import * as tf from '@tensorflow/tfjs';
+import { use } from "react";
 
 const Chat = () => {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
-  const chatEndRef = useRef(null); // Para el scroll automático
+  const [model, setModel] = useState(null);
+  const [tokenizer, setTokenizer] = useState(null);
+  const [intents, setIntents] = useState(null);
+  const chatEndRef = useRef(null);
 
-  // Cargar el modelo y el tokenizador al iniciar el componente
-  useEffect(() => {
-    const loadModelAndTokenizer = async () => {
-      try {
-        console.log("Cargando modelo...");
-        model = await tf.loadLayersModel("/modelo/modeloo.json"); // Ruta al modelo
-        console.log("Modelo cargado correctamente.");
-      } catch (error) {
-        console.error("Error al cargar el modelo:", error);
-      }
-
-      try {
-        console.log("Cargando tokenizer...");
-        const tokenizerResponse = await fetch("/modelo/tokenizer.json"); // Ruta al tokenizador
-        tokenizer = await tokenizerResponse.json();
-        console.log("Tokenizer cargado correctamente.");
-        if (tokenizer.word_index) {
-          console.log("Ejemplo de word_index:", tokenizer.word_index);
-        }
-        else {
-          console.error("word_index no encontrado en el tokenizer.");
-        }
-
-      } catch (error) {
-        console.error("Error al cargar el tokenizer:", error);
-      }
-    };
-
-    loadModelAndTokenizer();
-  }, []);
-
-  // Hacer scroll hacia abajo cuando se agregan mensajes
-  const scrollToBottom = () => {
-    chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  // Función para cargar los archivos JSON (modelo, tokenizer, intents)
+  const loadFiles = async () => {
+    // Cargar el modelo
+   try {
+    const modelJson = await fetch('/modeloo.json');
+    const modelData = await modelJson.json();
+    const loadedModel = await tf.loadLayersModel(tf.io.fromMemory(modelData));
+    setModel(loadedModel);
+    
+    // Cargar el tokenizer
+    const tokenizerJson = await fetch('/tokenizer.json');
+    const tokenizerData = await tokenizerJson.json();
+    setTokenizer(tokenizerData);
+    
+    // Cargar los intents
+    const intentsJson = await fetch('/intents.json');
+    const intentsData = await intentsJson.json();
+    setIntents(intentsData.intents);
+    }
+    catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {
-    scrollToBottom(); // Scroll automático
-  }, [messages]);
+    loadFiles(); // Cargar los archivos cuando el componente se monta
+  }, []);
 
-  // Tokenizar la entrada del usuario
-  const tokenizeInput = (text) => {
-    if (!tokenizer || !tokenizer.word_index) {
-      console.error("salida Tokenizer o word_index no cargado correctamente.");
-      return [];
+  // Función para convertir texto a secuencias
+  const textsToSequences = (texts) => {
+
+
+
+    console.log(texts);
+    try {
+      
+      if (!tokenizer) return [];
+      return texts.map((text) => {
+        const words = text.toLowerCase().trim().split(" ");
+        console.log("Aqui");
+        const word = "are";
+        const wordIndex = JSON.parse (tokenizer.config.word_index);
+       
+        
+
+
+        return words.map((word) => wordIndex[word] || 0); // Mapea cada palabra al índice correspondiente
+      });
+    }
+    catch (error) {
+      console.log(error);
+    }
+    
+  };
+
+  // Función para obtener la respuesta del modelo
+  const getResponse = async (userInput) => {
+
+   // console.log("Tokenizer: ", tokenizer);
+   // console.log("Tokenizer Word Index: ", tokenizer?.word_index);
+
+    if (!model || !tokenizer || !intents) {
+      return "Cargando el modelo, por favor espera...";
     }
 
-    const words = text.toLowerCase().replace(/[^\w\s]/g, "").split(" ");
-    return words
-      .map((word) => tokenizer.word_index[word] || 0) // Convierte las palabras en índices (0 si no está en word_index)
-      .filter((index) => index > 0); // Filtra palabras no encontradas (si es necesario)
+   
+    // Convertir el texto en secuencias y hacer padding
+    const sequences = textsToSequences([userInput]);
+    const paddedSequences= padSequences(sequences, model.inputs[0].shape[1]); 
+    
+    
+    // Realizar la predicción
+    const prediction = model.predict(tf.tensor2d(paddedSequences));
+    const responseIndex = prediction.argMax(-1).dataSync()[0];
+    console.log("Índice de respuesta:", responseIndex);
+  
+    // Verificar si el índice de respuesta es válido y acceder al intent
+    if (responseIndex < 0 || responseIndex >= intents.length) {
+      console.log("Índice de respuesta fuera de rango:", responseIndex);
+      return "Lo siento, no pude entender tu solicitud. ¿Puedes intentar otra vez?";
+    }
+  
+    // Obtener el intent correspondiente usando el índice
+    const intent = intents[responseIndex];
+  
+    console.log("Intent encontrado:", intent);
+  
+    // Seleccionar una respuesta aleatoria del intent
+    const randomIndex = Math.floor(Math.random() * intent.responses.length);
+    return intent.responses[randomIndex];
   };
 
   // Padding de las secuencias
   const padSequences = (sequences, maxLength) => {
-    const padded = Array.from({ length: maxLength }, () => 0);
-    for (let i = 0; i < Math.min(sequences.length, maxLength); i++) {
-      padded[i] = sequences[i];
-    }
-    return [padded];
+    return sequences.map((seq) => {
+      const padded = Array.from({ length: maxLength }, () => 0);
+      for (let i = 0; i < Math.min(seq.length, maxLength); i++) {
+        padded[i] = seq[i];
+      }
+      return padded;
+    });
   };
 
-  // Obtener respuesta del modelo
-  const getResponse = async (inputText) => {
-    if (!model) {
-      console.error("Modelo no cargado.");
-      return "Error al cargar el modelo.";
-    }
-    if (!tokenizer) {
-      console.error("tokenazier no cargado.");
-      return "Error al cargar el modelo.";
-    }
-    
-
-
-
-    const sequences = tokenizeInput(inputText); // Tokenizar entrada
-    const paddedSequences = padSequences(sequences, model.inputs[0].shape[1]); // Padding
-    const prediction = model.predict(tf.tensor2d(paddedSequences)); // Predicción
-
-    // Extraer la respuesta generada (si es texto)
-    const response = await prediction.data(); // Obtiene las probabilidades o texto generado
-    return response.join(" "); // Ajusta según el formato de tu modelo
-  };
-
-  // Manejar envío de mensajes
+  // Manejo del envío de mensajes
   const handleSendMessage = async () => {
-    if (input.trim() === "") return; // No enviar mensajes vacíos
+    if (input.trim() === "") return;
 
     const timestamp = new Date().toLocaleString();
     const userMessage = { text: input, sender: "user", timestamp };
     setMessages((prevMessages) => [...prevMessages, userMessage]);
 
     try {
+      console.log(input);
       const botResponse = await getResponse(input);
       const botMessage = { text: botResponse, sender: "bot", timestamp };
       setMessages((prevMessages) => [...prevMessages, botMessage]);
     } catch (error) {
-      const errorMessage = {
-        text: "Ocurrió un error al procesar tu mensaje. Intenta nuevamente.",
-        sender: "bot",
-        timestamp,
-      };
+      console.log(error);
+      const errorMessage = { text: "Ocurrió un error. Envía un mensaje nuevamente...", sender: "bot", timestamp };
       setMessages((prevMessages) => [...prevMessages, errorMessage]);
-      console.error("Error al predecir:", error);
     }
 
-    setInput(""); // Limpiar el campo de entrada
+    setInput("");
   };
 
-  // Enviar mensaje al presionar Enter
   const handleKeyPress = (event) => {
     if (event.key === "Enter") {
       handleSendMessage();
     }
   };
 
+  // Función para hacer scroll automáticamente cuando se agregan nuevos mensajes
+  const scrollToBottom = () => {
+    chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+
   return (
     <div className="chat-container">
       <div className="chat-header">Modelo IA Fase 1</div>
       <div className="chat-messages">
         {messages.map((msg, index) => (
-          <Mensaje
-            key={index}
-            text={msg.text}
-            sender={msg.sender}
-            timestamp={msg.timestamp}
-          />
+          <Mensaje key={index} text={msg.text} sender={msg.sender} timestamp={msg.timestamp} />
         ))}
         <div ref={chatEndRef} /> {/* Bandera para el scroll automático */}
       </div>
