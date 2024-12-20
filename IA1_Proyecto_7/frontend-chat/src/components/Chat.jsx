@@ -26,6 +26,13 @@ const Chat = () => {
         const tokenizerResponse = await fetch("/modelo/tokenizer.json"); // Ruta al tokenizador
         tokenizer = await tokenizerResponse.json();
         console.log("Tokenizer cargado correctamente.");
+        if (tokenizer.word_index) {
+          console.log("Ejemplo de word_index:", tokenizer.word_index);
+        }
+        else {
+          console.error("word_index no encontrado en el tokenizer.");
+        }
+
       } catch (error) {
         console.error("Error al cargar el tokenizer:", error);
       }
@@ -67,10 +74,17 @@ const Chat = () => {
 
   // Obtener respuesta del modelo
   const getResponse = async (inputText) => {
-    if (!model || !tokenizer) {
-      console.error("Modelo o tokenizador no cargado.");
+    if (!model) {
+      console.error("Modelo no cargado.");
       return "Error al cargar el modelo.";
     }
+    if (!tokenizer) {
+      console.error("tokenazier no cargado.");
+      return "Error al cargar el modelo.";
+    }
+    
+
+
 
     const sequences = tokenizeInput(inputText); // Tokenizar entrada
     const paddedSequences = padSequences(sequences, model.inputs[0].shape[1]); // Padding
