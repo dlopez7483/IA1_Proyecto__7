@@ -53,7 +53,7 @@ const Chat = () => {
   // Tokenizar la entrada del usuario
   const tokenizeInput = (text) => {
     if (!tokenizer || !tokenizer.word_index) {
-      console.error("Tokenizer o word_index no cargado correctamente.");
+      console.error("salida Tokenizer o word_index no cargado correctamente.");
       return [];
     }
 
